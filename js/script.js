@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-  let colorList = ['green','red','yellow','pink','green','blue','purple','yellow','orange','orange','pink','brown','purple','red','brown','blue'];
+  const colorList = ['green','red','yellow','pink','blue','purple','orange','brown'];
 
   class Container extends React.Component {
     constructor(props) {
@@ -19,9 +19,10 @@
     }
 
     start() {
-      let colorListSort = colorList.sort(function(a,b){
+      let colorListSort = colorList.concat(colorList).sort(function(a,b){
         return Math.random() - 0.5;
       });
+      console.log(colorListSort)
       let tiles = colorListSort.map(function (color) {
         return {
           color : color
@@ -57,8 +58,9 @@
 
     checkPair() {
       this.state.totalRounds++;
-      let tiles = this.state.selectedTiles;
-      if (colorList[tiles[0].id] === colorList[tiles[1].id]) {
+      let selectedTiles = this.state.selectedTiles;
+      let tiles = this.state.tiles;
+      if (tiles[selectedTiles[0].id].color === tiles[selectedTiles[1].id].color) {
         this.state.matchingPair++;
         this.setState({
           selectedTiles : []
@@ -113,13 +115,13 @@
        render(){
          return (
             <div>
-              <div className={this.props.gameStart ? "title-sreen" : "hide"} onClick={this.props.start}>
+              <div className={this.props.gameStart ? "title" : "hide"} onClick={this.props.start}>
                <div className="overlay"></div>
                  <div className="visible">
                    <h1>CLick to start!</h1>
                  </div>
               </div>
-              <div className={this.props.gameOver ? "win-msg" : "hide"}>
+              <div className={this.props.gameOver ? "title" : "hide"}>
               <div className="overlay"></div>
                 <div className="visible">
                   <h1>You win!</h1>

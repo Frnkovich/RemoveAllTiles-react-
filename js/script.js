@@ -22,7 +22,6 @@
       let colorListSort = colorList.concat(colorList).sort(function(a,b){
         return Math.random() - 0.5;
       });
-      console.log(colorListSort)
       let tiles = colorListSort.map(function (color) {
         return {
           color : color
